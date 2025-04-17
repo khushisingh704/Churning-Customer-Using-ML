@@ -13,3 +13,5 @@
 This approach enables a data-driven understanding of customer behavior, facilitating proactive measures to enhance customer loyalty and engagement.
   </body>
 </html>
+
+![Churn-Prediction-scaled](https://github.com/user-attachments/assets/1a7fb46d-f073-4e51-8751-4800dc2f3d13)
