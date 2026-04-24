@@ -20,7 +20,7 @@ st.set_page_config(
 # ----------------------------------------------------------
 # LOAD FILES
 # ----------------------------------------------------------
-model = pickle.load(open("model (1).sav", "rb"))
+model = pickle.load(open("model.sav", "rb"))
 
 raw_df = pd.read_csv("first_telc.csv")
 dummy_df = pd.read_csv("tel_churn.csv")
