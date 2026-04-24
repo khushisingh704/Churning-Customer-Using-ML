@@ -22,7 +22,9 @@ st.set_page_config(
 # ----------------------------------------------------------
 model = pickle.load(open("model.sav", "rb"))
 
-raw_df = pd.read_csv("first_telc.csv")
+raw_df = pd.read_csv("CustChurn.csv")
+raw_df.columns = raw_df.columns.str.strip()
+
 dummy_df = pd.read_csv("tel_churn.csv")
 
 # remove unwanted column if exists
