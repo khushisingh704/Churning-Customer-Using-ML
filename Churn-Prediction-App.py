@@ -108,6 +108,26 @@ with c3:
 st.markdown("---")
 
 # ==========================================================
+# ADD THIS SECTION AFTER BUSINESS CHARTS
+# (place below: st.markdown("---") after charts)
+# ==========================================================
+
+st.subheader("📌 Key Business Insights")
+
+st.info("""
+• Month-to-month contract customers show the highest churn risk compared to long-term contracts.
+
+• Customers using Electronic Check payment mode are more likely to churn than auto-payment users.
+
+• Higher monthly charge customers tend to leave more frequently, indicating price sensitivity.
+
+• Customers with low tenure are at greater churn risk than long-term loyal customers.
+
+• Two-year contract customers demonstrate the strongest retention and stability.
+""")
+
+st.markdown("---")
+# ==========================================================
 # PREDICTION FORM
 # ==========================================================
 st.subheader("🔍 Predict Customer Churn Risk")
