@@ -112,7 +112,7 @@ st.markdown("---")
 # (place below: st.markdown("---") after charts)
 # ==========================================================
 
-st.subheader("📌 Key Business Insights")
+st.subheader("Key Business Insights")
 
 st.info("""
 • Month-to-month contract customers show the highest churn risk compared to long-term contracts.
@@ -220,7 +220,7 @@ if st.button("Predict Churn"):
         st.error("⚠️ High Churn Risk Customer")
 
         st.markdown("""
-        ### 📌 Business Retention Action Plan:
+        ### Business Retention Action Plan:
         - Offer annual contract discount  
         - Provide loyalty cashback  
         - Assign retention support executive  
@@ -228,10 +228,10 @@ if st.button("Predict Churn"):
         """)
 
     else:
-        st.success("✅ Low Churn Risk Customer")
+        st.success(" Low Churn Risk Customer")
 
         st.markdown("""
-        ### 📌 Growth Opportunity:
+        ### Growth Opportunity:
         - Upsell premium plans  
         - Cross-sell OTT bundles  
         - Refer-a-friend offers  
