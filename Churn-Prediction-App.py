@@ -23,7 +23,7 @@ st.set_page_config(
 model = pickle.load(open("model.sav", "rb"))
 
 raw_df = pd.read_csv("CustChurn.csv")
-raw_df.columns = raw_df.columns.str.strip()
+raw_df.columns = raw_df.columns.str.strip()   # remove hidden spaces
 
 dummy_df = pd.read_csv("tel_churn.csv")
 
@@ -38,10 +38,24 @@ st.title("📊 Customer Churn Analytics Dashboard")
 st.markdown("### Business Retention Intelligence & Customer Risk Prediction")
 
 # ==========================================================
-# KPI SECTION
+# KPI SECTION (FIXED)
 # ==========================================================
 total_customers = len(raw_df)
-churn_rate = round((raw_df["Churn"].value_counts()["Yes"] / total_customers) * 100, 2)
+
+# safer churn rate calculation
+churn_rate = round(
+    (
+        raw_df["Churn"]
+        .astype(str)
+        .str.strip()
+        .str.lower()
+        .eq("yes")
+        .sum()
+        / total_customers
+    ) * 100,
+    2
+)
+
 avg_monthly = round(raw_df["MonthlyCharges"].mean(), 2)
 avg_tenure = round(raw_df["tenure"].mean(), 1)
 
@@ -129,7 +143,6 @@ with col3:
 # ==========================================================
 if st.button("Predict Churn"):
 
-    # create blank dataframe using training columns
     input_df = pd.DataFrame(columns=dummy_df.drop("Churn", axis=1).columns)
     input_df.loc[0] = 0
 
@@ -145,40 +158,42 @@ if st.button("Predict Churn"):
         input_df["gender_Female"] = 1
 
     # partner
-    input_df[f"Partner_{partner}"] = 1
+    if f"Partner_{partner}" in input_df.columns:
+        input_df[f"Partner_{partner}"] = 1
 
     # dependents
-    input_df[f"Dependents_{dependents}"] = 1
+    if f"Dependents_{dependents}" in input_df.columns:
+        input_df[f"Dependents_{dependents}"] = 1
 
     # contract
-    input_df[f"Contract_{contract}"] = 1
+    if f"Contract_{contract}" in input_df.columns:
+        input_df[f"Contract_{contract}"] = 1
 
     # billing
-    input_df[f"PaperlessBilling_{paperless}"] = 1
+    if f"PaperlessBilling_{paperless}" in input_df.columns:
+        input_df[f"PaperlessBilling_{paperless}"] = 1
 
     # payment
-    input_df[f"PaymentMethod_{payment}"] = 1
+    if f"PaymentMethod_{payment}" in input_df.columns:
+        input_df[f"PaymentMethod_{payment}"] = 1
 
     # tenure groups
-    if tenure <= 12:
+    if tenure <= 12 and "tenure_group_1 - 12" in input_df.columns:
         input_df["tenure_group_1 - 12"] = 1
-    elif tenure <= 24:
+    elif tenure <= 24 and "tenure_group_13 - 24" in input_df.columns:
         input_df["tenure_group_13 - 24"] = 1
-    elif tenure <= 36:
+    elif tenure <= 36 and "tenure_group_25 - 36" in input_df.columns:
         input_df["tenure_group_25 - 36"] = 1
-    elif tenure <= 48:
+    elif tenure <= 48 and "tenure_group_37 - 48" in input_df.columns:
         input_df["tenure_group_37 - 48"] = 1
-    elif tenure <= 60:
+    elif tenure <= 60 and "tenure_group_49 - 60" in input_df.columns:
         input_df["tenure_group_49 - 60"] = 1
-    else:
+    elif "tenure_group_61 - 72" in input_df.columns:
         input_df["tenure_group_61 - 72"] = 1
 
     # prediction
     pred = model.predict(input_df)[0]
 
-    # ======================================================
-    # RESULT
-    # ======================================================
     st.markdown("---")
 
     if pred == 1:
